@@ -37,6 +37,10 @@ function displayEditView(){
     addAccountsView.style.display = "none";
     editAccountsView.style.display = "block";
 }
+function displayEditForm() {
+    
+}
+
 function saveNewAccount(){
     let newAccount = {
             name : nameInput.value,
@@ -83,15 +87,17 @@ db.forEach((account,index) => {
             <td>${account.lastName}</td>
             <td>${account.email}</td>
             <td>${account.phone}</td>
-            <td><button class="btn btn-warning btn-sm form-control">Edit</button></td>
+            <td><button data-id="${index}"class="btn btn-warning btn-sm form-control edit">Edit</button></td>
             <td><button data-id="${index}"class="btn btn-danger btn-sm form-control delete">Delete</button></td>
         </tr>
     `;
 })
 editTable.innerHTML = text;
 let deleteBtns = document.querySelectorAll(".delete");
+let editBtns = document.querySelectorAll(".edit");
 for (let i = 0; i < deleteBtns.length; i++) {
     deleteBtns[i].addEventListener("click",deleteAccount);
+    editBtns[i].addEventListener("click",displayEditForm);
 }
 displayEditView();
 }
