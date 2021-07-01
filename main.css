@@ -4,3 +4,9 @@
     background-color: #e9ecef;
     border-radius: .3rem;
 }
+#add-accounts-view{
+    display: none;
+}
+#edit-accounts-view{
+    display: none;
+}
