@@ -19,7 +19,9 @@ addAccountsBtn.addEventListener('click',displayAddAccountsView);
 accountsBtn.addEventListener('click',displayAccountsView);
 saveAccountBtn.addEventListener('click',saveNewAccount);
 editAccountsBtn.addEventListener('click',createEditTable);
+
 createTable()
+
 function displayAddAccountsView(){
     accountsView.style.display = "none";
     addAccountsView.style.display = "block";
@@ -69,12 +71,12 @@ db.forEach(account => {
             <td>${account.phone}</td>
         </tr>
     `;
-    mainTable.innerHTML = text;
 })
+mainTable.innerHTML = text;
 }
 function createEditTable(){
 let text = ``;
-db.forEach(account => {
+db.forEach((account,index) => {
     text += `
         <tr>
             <td>${account.name}</td>
@@ -82,10 +84,23 @@ db.forEach(account => {
             <td>${account.email}</td>
             <td>${account.phone}</td>
             <td><button class="btn btn-warning btn-sm form-control">Edit</button></td>
-            <td><button class="btn btn-danger btn-sm form-control">Delete</button></td>
+            <td><button data-id="${index}"class="btn btn-danger btn-sm form-control delete">Delete</button></td>
         </tr>
     `;
-    editTable.innerHTML = text;
-    displayEditView();
 })
+editTable.innerHTML = text;
+let deleteBtns = document.querySelectorAll(".delete");
+for (let i = 0; i < deleteBtns.length; i++) {
+    deleteBtns[i].addEventListener("click",deleteAccount);
+}
+displayEditView();
+}
+
+function deleteAccount() {
+    let index = this.getAttribute("data-id");
+    let sure = confirm("Do you want to delete "+db[index].name+"?")
+    db.splice(index,1);
+    createTable();
+    displayAccountsView();
+
 }
